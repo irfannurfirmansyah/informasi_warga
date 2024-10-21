@@ -204,13 +204,13 @@
             <div class="row">
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #343257; color: white;">
-                        <h5>Dajukan</h5>
+                        <h5>Dajukan.</h5>
                         <h1>14</h1>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #BDCAD0; color: white;">
-                        <h5>Diproses</h5>
+                        <h5>Diproses.</h5>
                         <h1>3</h1>
                     </div>
                 </div>
