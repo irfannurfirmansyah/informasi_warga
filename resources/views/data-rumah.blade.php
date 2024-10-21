@@ -2,5 +2,5 @@
 
 @section('content')
     <h1>Data rumah</h1>
-    <p>Halaman Data rumah.</p>
+    <p>Ini TEST Halaman Data rumah.</p>
 @endsection
