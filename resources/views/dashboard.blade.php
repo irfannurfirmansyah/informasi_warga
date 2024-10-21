@@ -216,13 +216,13 @@
                 </div>
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #7EA7BD; color: white;">
-                        <h5>Disetujui</h5>
+                        <h5>Disetujui . . .</h5>
                         <h1>7</h1>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #6B8FB3; color: white;">
-                        <h5>Ditolak</h5>
+                        <h5>Ditolak.</h5>
                         <h1>4</h1>
                     </div>
                 </div>
