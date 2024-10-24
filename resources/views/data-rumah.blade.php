@@ -1,36 +1,68 @@
-@extends('layouts.app') 
+@extends('layouts.app')
 
 @section('content')
-    <h1>Data Rumah</h1>
-    <p>Ini adalah Halaman Data Rumah.</p>
 
-    <!-- Filter Options -->
-    <div>
-        <span style="cursor: pointer;" onclick="filterTable('A')">Block A</span> |
-        <span style="cursor: pointer;" onclick="filterTable('D')">Block D</span> |
-        <span style="cursor: pointer;" onclick="filterTable('Warga')">Warga</span> |
-        <span style="cursor: pointer;" onclick="filterTable('Ngontrak')">Ngontrak</span> |
-        <span style="cursor: pointer;" onclick="filterYear(2024)">Tahun 2024</span> |
-        <span style="cursor: pointer;" onclick="filterYear(2023)">Tahun 2023</span> |
-        <span style="cursor: pointer;" onclick="filterYear(2022)">Tahun 2022</span> |
-        <span style="cursor: pointer;" onclick="filterYear(2021)">Tahun 2021</span> |
-        <span style="cursor: pointer;" onclick="resetFilter()">Reset Filter</span>
+<!-- Image Section -->
+<div style="text-align: center; margin-bottom: 10px;">
+    <img src="{{ asset('images/border-block.jpg') }}" alt="Border Block" style="width: 100%; max-width: 630px;">
+</div>
+
+<!-- Filter Section -->
+<div style="display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; width: 50%; margin: 0 auto;">
+    <div style="border: 1px solid #ccc; padding: 10px; width: 100%;">
+        <span style="cursor: pointer;" onclick="setStatusFilter('A')">Block A</span>
+        <div class="active-line status-line" id="lineBlockA" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
+        <div>
+            <span style="cursor: pointer;" onclick="setStatusFilter('D')">Block D</span>
+        </div>
+        <div class="active-line status-line" id="lineBlockD" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
     </div>
 
-    <div style="max-height: 400px; overflow-y: scroll;">
-        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-            <thead style="position: sticky; top: 0; background-color: white; z-index: 10;">
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Jumlah Penghuni</th>
-                    <th>Alamat Rumah</th>
-                    <th>Keterangan Rumah</th>
-                </tr>
-            </thead>
-            <tbody id="dataBody">
-                @php
-                    $dataRumah = [
+    <div style="border: 1px solid #ccc; padding: 10px; width: 100%;">
+        <span style="cursor: pointer;" onclick="setStatusFilter('Warga')">Warga</span>
+        <div class="active-line status-line" id="lineWarga" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
+        <div>
+            <span style="cursor: pointer;" onclick="setStatusFilter('Ngontrak')">Ngontrak</span>
+        </div>
+        <div class="active-line status-line" id="lineNgontrak" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
+    </div>
+
+    <div style="border: 1px solid #ccc; padding: 10px; width: 100%;">
+        <span style="cursor: pointer;" onclick="setYearFilter(2024)">Tahun 2024</span>
+        <div class="active-line year-line" id="line2024" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
+        <div>
+            <span style="cursor: pointer;" onclick="setYearFilter(2023)">Tahun 2023</span>
+        </div>
+        <div class="active-line year-line" id="line2023" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
+        <div>
+            <span style="cursor: pointer;" onclick="setYearFilter(2022)">Tahun 2022</span>
+        </div>
+        <div class="active-line year-line" id="line2022" style="display: none; height: 3px; background-color: #0090D0; margin-top: 5px;"></div>
+    </div>
+
+    <div style="border: 1px solid #ccc; padding: 10px; width: 100%;">
+        <span style="cursor: pointer;" onclick="resetFilters()">Reset Filter</span>
+    </div>
+</div>
+
+<!-- Info Text -->
+<div id="infoText" style="font-size: 20px; margin-bottom: 10px; text-align: center;"></div>
+
+<!-- Data Table Section -->
+<div style="max-height: 400px; overflow-y: scroll; width: 50%; margin: 0 auto;">
+    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <thead style="position: sticky; top: 0; background-color: white; z-index: 10;">
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Jumlah Penghuni</th>
+                <th>Alamat Rumah</th>
+                <th>Keterangan Rumah</th>
+            </tr>
+        </thead>
+        <tbody id="dataBody">
+            @php
+                $dataRumah = [
                         ['nama' => 'Agus', 'jumlahPenghuni' => 2, 'alamat' => 'A1', 'noRumah' => 34, 'status' => 'Warga', 'tahunMenetap' => '2022'],
                         ['nama' => 'Budi', 'jumlahPenghuni' => 3, 'alamat' => 'A2', 'noRumah' => 12, 'status' => 'Warga', 'tahunMenetap' => '2020'],
                         ['nama' => 'Citra', 'jumlahPenghuni' => 1, 'alamat' => 'A3', 'noRumah' => 27, 'status' => 'Ngontrak', 'tahunMenetap' => '2021'],
@@ -129,54 +161,121 @@
                         ['nama' => 'Vivi', 'jumlahPenghuni' => 4, 'alamat' => 'D4', 'noRumah' => 99, 'status' => 'Warga', 'tahunMenetap' => '2023'],
                         ['nama' => 'Wira', 'jumlahPenghuni' => 5, 'alamat' => 'D1', 'noRumah' => 100, 'status' => 'Warga', 'tahunMenetap' => '2024']
                     ];
-                @endphp
-                @foreach ($dataRumah as $index => $rumah)
-                    <tr data-tahun="{{ $rumah['tahunMenetap'] }}">
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $rumah['nama'] }}</td>
-                        <td>{{ $rumah['jumlahPenghuni'] }} penghuni</td>
-                        <td>{{ $rumah['alamat'] }}, No {{ $rumah['noRumah'] }}</td>
-                        <td>{{ $rumah['status'] }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endphp
+            @foreach ($dataRumah as $index => $rumah)
+                <tr data-tahun="{{ $rumah['tahunMenetap'] }}" data-status="{{ $rumah['status'] }}" data-alamat="{{ $rumah['alamat'] }}">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $rumah['nama'] }}</td>
+                    <td>{{ $rumah['jumlahPenghuni'] }} penghuni</td>
+                    <td>{{ $rumah['alamat'] }}, No {{ $rumah['noRumah'] }}</td>
+                    <td>{{ $rumah['status'] }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
-    <script>
-        function filterTable(filter) {
-            const rows = document.querySelectorAll('#dataBody tr');
-            rows.forEach(row => {
-                const alamat = row.cells[3].textContent; 
-                const status = row.cells[4].textContent; 
 
-                // Cek apakah filter sesuai dengan alamat atau status
-                if (alamat.includes(filter) || status.includes(filter)) {
-                    row.style.display = ''; 
-                } else {
-                    row.style.display = 'none'; 
-                }
-            });
-        }
+<script>
+    let activeYearFilter = null;
+    let activeStatusFilter = null;
 
-        function filterYear(year) {
-            const rows = document.querySelectorAll('#dataBody tr');
-            rows.forEach(row => {
-                const tahun = parseInt(row.getAttribute('data-tahun')); // Ambil tahun dari atribut data
-                // Cek apakah tahun dari data kurang dari atau sama dengan tahun filter
-                if (tahun <= year) {
-                    row.style.display = ''; 
-                } else {
-                    row.style.display = 'none'; 
-                }
-            });
-        }
+    // Inisialisasi infoText saat pertama kali halaman dimuat
+    window.onload = function() {
+        document.getElementById('infoText').textContent = "Semua data ditampilkan.";
+    };
 
-        function resetFilter() {
-            const rows = document.querySelectorAll('#dataBody tr');
-            rows.forEach(row => {
+    function setStatusFilter(status) {
+        activeStatusFilter = status;
+        applyFilters();
+        highlightActiveStatus(status);
+    }
+
+    function setYearFilter(year) {
+        activeYearFilter = year;
+        applyFilters();
+        highlightActiveYear(year);
+    }
+
+    function applyFilters() {
+        const rows = document.querySelectorAll('#dataBody tr');
+        let filteredData = [];
+        let blockInfo = ''; // Untuk menyimpan informasi blok
+        let statusInfo = ''; // Untuk menyimpan status
+
+        rows.forEach(row => {
+            const tahun = parseInt(row.getAttribute('data-tahun'));
+            const status = row.getAttribute('data-status');
+            const alamat = row.getAttribute('data-alamat');
+
+            let showRow = true;
+
+            if (activeStatusFilter) {
+                showRow = (status.includes(activeStatusFilter) || alamat.includes(activeStatusFilter));
+            }
+            
+            if (activeYearFilter && showRow) {
+                showRow = (tahun === activeYearFilter);
+            }
+
+            if (showRow) {
                 row.style.display = '';
-            });
+                filteredData.push({ tahun, status, alamat, jumlah: row.cells[2].textContent.split(' ')[0] });
+                blockInfo = alamat; // Update dengan alamat dari data yang sesuai filter
+                statusInfo = status; // Update dengan status dari data yang sesuai filter
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        updateInfoText(filteredData, blockInfo, statusInfo);
+    }
+
+    function highlightActiveStatus(status) {
+        document.querySelectorAll('.status-line').forEach(line => line.style.display = 'none');
+
+        if (status === 'A') {
+            document.getElementById('lineBlockA').style.display = 'block';
+        } else if (status === 'D') {
+            document.getElementById('lineBlockD').style.display = 'block';
+        } else if (status === 'Warga') {
+            document.getElementById('lineWarga').style.display = 'block';
+        } else if (status === 'Ngontrak') {
+            document.getElementById('lineNgontrak').style.display = 'block';
         }
-    </script>
+    }
+
+    function highlightActiveYear(year) {
+        document.querySelectorAll('.year-line').forEach(line => line.style.display = 'none');
+        
+        if (year === 2024) {
+            document.getElementById('line2024').style.display = 'block';
+        } else if (year === 2023) {
+            document.getElementById('line2023').style.display = 'block';
+        } else if (year === 2022) {
+            document.getElementById('line2022').style.display = 'block';
+        }
+    }
+
+    function resetFilters() {
+        activeYearFilter = null;
+        activeStatusFilter = null;
+        applyFilters();
+
+        document.querySelectorAll('.active-line').forEach(line => line.style.display = 'none');
+
+        // Perbarui infoText dengan teks default saat filter direset
+        document.getElementById('infoText').textContent = "Semua data ditampilkan.";
+    }
+
+    function updateInfoText(filteredData, blockInfo, statusInfo) {
+        let infoText = 'Menampilkan ' + filteredData.length + ' data.';
+        if (filteredData.length > 0) {
+            let totalPenghuni = filteredData.reduce((sum, item) => sum + parseInt(item.jumlah), 0);
+            infoText = `${filteredData[0].tahun} Pesona Bali, Block ${blockInfo}, ${statusInfo}`;
+        }
+        document.getElementById('infoText').textContent = infoText;
+    }
+</script>
+
 @endsection

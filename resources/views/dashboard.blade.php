@@ -194,29 +194,27 @@
         </div>
         <div class="col-md-6 col-sm-12 d-flex flex-column">
             <div class="dashboard-card mb-3 additional-block">
-                <!-- isi konten belum di tentukan -->
             </div>
             <div class="dashboard-card additional-block">
-                <!-- isi konten belum di tentukan -->
             </div>
         </div>
         <div class="dashboard-card mt-3">
             <div class="row">
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #343257; color: white;">
-                        <h5>Dajukan.</h5>
+                        <h5>Dajukan</h5>
                         <h1>14</h1>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #BDCAD0; color: white;">
-                        <h5>Diproses.</h5>
+                        <h5>Diproses</h5>
                         <h1>3</h1>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="dashboard-card" style="background-color: #7EA7BD; color: white;">
-                        <h5>Disetujui . . .</h5>
+                        <h5>Disetujui</h5>
                         <h1>7</h1>
                     </div>
                 </div>
@@ -236,8 +234,8 @@
         @foreach(range(1, 6) as $i)
         <div class="item" style="background-image: url('{{ asset("images/$i.jpg") }}');">
             <div class="content">
-                <div class="name">Proyek {{ $i }}</div>
-                <div class="des">Deskripsi proyek {{ $i }}</div>
+                <div class="name">Perumahan Pesona Bali 2024 {{ $i }}</div>
+                <div class="des">Carilah tempat tinggalmu sesuai preferensi mu! {{ $i }}</div>
                 <a href="#"><button target="_blank">See more</button></a>
                 <a href="#"><button>back to home page</button></a>
             </div>
